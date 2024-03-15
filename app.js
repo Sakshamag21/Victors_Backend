@@ -5,7 +5,11 @@ const mongoose = require("mongoose");
 require("./db/conn");
 const users = require("./models/userSchema");
 const cors = require("cors");
-const router = require("./routes/router");
+const resourcesRouter = require("./routes/resourcesRouter");
+const resultsRouter = require("./routes/resultsRouter");
+const mailRouter=require("./routes/mail")
+const attendanceRouter= require("./routes/attendanceRoutes")
+const userRouter= require("./routes/userRouter")
 
 const port = process.env.PORT || 8003;
 
@@ -16,7 +20,11 @@ app.use(express.json());
 //     res.json("server start")
 // })
 
-app.use(router);
+app.use("/resources",resourcesRouter);
+app.use("/results",resultsRouter);
+app.use("/mail",mailRouter);
+app.use("/attendance",attendanceRouter);
+app.use("/user",userRouter)
 
 if(process.env.NODE_ENV=='production'){
     const path = require('path')
