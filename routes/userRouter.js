@@ -128,6 +128,21 @@ router.delete('/users/:id', async (req, res) => {
 });
 
 
+router.get('/users/password/:username', async (req, res) => {
+  const username = req.params.username;
+
+  try {
+    const user = await User.findOne({ username });
+    console.log(user)
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+    // Return only the password field for security reasons
+    res.json({ password: user.password, email: user.email });
+  } catch (error) {
+    res.status(500).send();
+  }
+});
 
 module.exports = router;
 

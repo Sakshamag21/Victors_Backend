@@ -10,6 +10,7 @@ const resultsRouter = require("./routes/resultsRouter");
 const mailRouter=require("./routes/mail")
 const attendanceRouter= require("./routes/attendanceRoutes")
 const userRouter= require("./routes/userRouter")
+const scheduleRouter= require("./routes/scheduleRouter")
 
 const port = process.env.PORT || 8003;
 
@@ -25,6 +26,7 @@ app.use("/results",resultsRouter);
 app.use("/mail",mailRouter);
 app.use("/attendance",attendanceRouter);
 app.use("/user",userRouter)
+app.use("/schedule",scheduleRouter)
 
 if(process.env.NODE_ENV=='production'){
     const path = require('path')

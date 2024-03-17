@@ -79,6 +79,40 @@ router.post('/query-mail', (req, res) => {
         });
 });
 
+router.post('/password-mail', (req, res) => {
+    const {password,email} = req.body;
+    const sender = {
+        email: 'sakshanag277@gamil.com',
+        name: 'Saksham Agarwal',
+    }
+    const recivers = [{email: email,},]
+
+    const transactionalEmailApi = new Sib.TransactionalEmailsApi()
+
+    transactionalEmailApi
+        .sendTransacEmail({
+            subject: 'Password for Victors',
+            sender,
+            to: recivers,
+            textContent: `Your Password is {{params.password}}`,
+            params: {
+                password: password,
+            },
+        })
+        .then(response => {
+            if (response.messageId) {
+                res.status(200).json({ message: 'Data sended successfully' });
+            } else {
+                res.status(500).json({ error: 'Unexpected response from email service' });
+            }
+        })
+        .catch(error => {
+            console.error('Error sending email:', error);
+            res.status(500).json({ error: 'Internal server error' });
+        });
+});
+
+
 
 
 module.exports = router;
