@@ -14,6 +14,7 @@ apiKey.apiKey = 'xkeysib-69c28d3536564a32d091227400e6603bef01274d65534c7a267efa2
 
 // Route to handle POST requests
 router.post('/otp-verification', (req, res) => {
+    console.log("otp sended")
     const {otp,email} = req.body;
     const sender = {
         email: 'sakshamag21@iitk.ac.in',
@@ -80,7 +81,7 @@ router.post('/query-mail', (req, res) => {
 });
 
 router.post('/password-mail', (req, res) => {
-    const {password,email} = req.body;
+    const {password,email,name} = req.body;
     const sender = {
         email: 'sakshanag277@gamil.com',
         name: 'Saksham Agarwal',
@@ -94,9 +95,10 @@ router.post('/password-mail', (req, res) => {
             subject: 'Password for Victors',
             sender,
             to: recivers,
-            textContent: `Your Password is {{params.password}}`,
+            textContent: `Your Password is {{params.password}} and your name is {{params.name}}`,
             params: {
                 password: password,
+                name:name,
             },
         })
         .then(response => {

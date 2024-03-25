@@ -14,7 +14,7 @@ router.post('/register', async (req, res) => {
       // Check if the email already exists
       const existingUser = await User.findOne({ email: req.body.email });
       if (existingUser) {
-        return res.status(400).send({ error: 'Email already exists' });
+        return res.status(401).send({ error: 'Email already exists' });
       }
   
       // Create the user
@@ -138,7 +138,7 @@ router.get('/users/password/:username', async (req, res) => {
       return res.status(404).json({ error: 'User not found' });
     }
     // Return only the password field for security reasons
-    res.json({ password: user.password, email: user.email });
+    res.json({ password: user.password, email: user.email , name: user.name});
   } catch (error) {
     res.status(500).send();
   }
