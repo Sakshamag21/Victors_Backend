@@ -7,7 +7,7 @@ require('dotenv').config()
 const client = Sib.ApiClient.instance
 
 const apiKey = client.authentications['api-key']
-apiKey.apiKey = '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'
+apiKey.apiKey = process.env.APIKEY
 
 
 
