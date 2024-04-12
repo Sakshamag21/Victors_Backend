@@ -8,13 +8,16 @@ router.post('/examination-results', async (req, res) => {
         const { class: className, examinationId, students } = req.body;
 
         // Check if the class exists
-        let existingResult = await ExaminationResult.findOne({ class: className, examinationId });
+        let existingResult = await ExaminationResult.findOne({ class: className, examinationId: examinationId });
 
         if (existingResult) {
-            // If examination result exists, append students' data to it
-            existingResult.students.push(...students);
-            const updatedResult = await existingResult.save();
-            res.status(200).json(updatedResult); // Respond with updated examination result
+            // Delete existing examination result
+            await ExaminationResult.deleteOne({ _id: existingResult._id });
+
+            // Create new examination result document
+            const examinationResult = new ExaminationResult({ class: className, examinationId, students });
+            const savedResult = await examinationResult.save();
+            res.status(201).json(savedResult); // Respond with newly created examination result
         } else {
             // Create new examination result document
             const examinationResult = new ExaminationResult({ class: className, examinationId, students });
@@ -26,6 +29,7 @@ router.post('/examination-results', async (req, res) => {
         res.status(500).json({ message: 'Internal Server Error' });
     }
 });
+
 
 // GET API to get all examination results
 router.get('/examination-results', async (req, res) => {

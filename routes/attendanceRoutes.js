@@ -5,6 +5,15 @@ const ClassAttendance = require('../models/attendanceSchema'); // Assuming your 
 // Route to create class attendance
 router.post('/attendance', async (req, res) => {
   try {
+    const existingAttendance = await ClassAttendance.findOne({
+      class: req.body.class,
+      date: req.body.date
+    });
+    console.log(req.body.class,req.body.date,existingAttendance)
+
+    if (existingAttendance) {
+      return res.status(409).send("Attendance data for this class and date already exists.");
+    }
     console.log(req.body)
     const attendance = new ClassAttendance(req.body);
     await attendance.save();
