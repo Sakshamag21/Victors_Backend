@@ -18,7 +18,7 @@ router.post('/otp-verification', (req, res) => {
     const {otp,email} = req.body;
     const sender = {
         email: 'sakshamag21@iitk.ac.in',
-        name: 'Saksham Agarwal',
+        name: 'Victor Career Foundation',
     }
     const recivers = [{email: email,},]
 
@@ -84,7 +84,7 @@ router.post('/password-mail', (req, res) => {
     const {password,email,name} = req.body;
     const sender = {
         email: 'sakshanag277@gamil.com',
-        name: 'Saksham Agarwal',
+        name: 'Victor Career Foundation',
     }
     const recivers = [{email: email,},]
 
